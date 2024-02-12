@@ -1,0 +1,73 @@
+<!-- yonetici_sayfasi.html -->
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Sayfası</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Yönetici Sayfası</h2>
+        <p>Bu sayfada diğer kullanıcıların hesap bilgilerini yönetebilirsiniz.</p>
+
+        <!-- Diğer işlemler buraya eklenebilir -->
+
+        <!-- Hesapları Sil Butonu -->
+        <button type="button" onclick="deleteAllUserAccounts()">Tüm Kullanıcı Hesaplarını Sil</button>
+    </div>
+
+    <script>
+        // Tüm kullanıcı hesaplarını silme işlemi
+        function deleteAllUserAccounts() {
+            const confirmation = confirm("Tüm kullanıcı hesaplarını silmek istediğinizden emin misiniz?");
+            
+            if (confirmation) {
+                // localStorage'dan tüm hesapları sil
+                localStorage.clear();
+                alert("Tüm kullanıcı hesapları başarıyla silindi.");
+            } else {
+                alert("Hesap silme işlemi iptal edildi.");
+            }
+        }
+    </script>
+</body>
+
+</html>

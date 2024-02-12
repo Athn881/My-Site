@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Memnuniyet Anketi</title>
+    <style>
+        /* Güncellenmiş tema stilleri */
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            margin: 20px;
+            background-color: #ecf0f1; /* Beyaz tonları */
+            text-align: center;
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            color: #c0392b; /* Alizarin Crimson */
+        }
+
+        .il {
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .ilce-listesi,
+        .dil-secenekleri,
+        .ilerle-buton,
+        .soru-cevap-kutusu,
+        .cevap-gonder,
+        .basari-mesaji {
+            display: none;
+        }
+
+        .git-buton {
+            padding: 10px 20px;
+            background-color: #c0392b; /* Alizarin Crimson */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .dil-secenekleri {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            color: #666;
+            z-index: 999;
+            background-color: #ecf0f1; /* Beyaz tonları */
+            border-top: 1px solid #ddd; /* Gri tonları */
+            border-radius: 0 0 8px 8px;
+        }
+
+        .eksik-alan {
+            color: #c0392b; /* Alizarin Crimson */
+            margin-top: 10px;
+        }
+
+        .ilerle-buton button,
+        .cevap-gonder button {
+            padding: 10px 20px;
+            background-color: #c0392b; /* Alizarin Crimson */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .basari-mesaji {
+            display: none;
+            color: #2ecc71; /* Emerald */
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Yeni stiller */
+        #settingsIcon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 24px;
+        }
+
+        #settingsPanel {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: left 0.5s ease;
+        }
+
+        #settingsPanel a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        #settingsPanel a:hover {
+            background-color: #ecf0f1;
+        }
+
+        #settingsPanel #closeBtn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Türkiye Memnuniyet Anketi</h1>
+
+    <div class="il">
+        <div id="firstPage">
+            <h1>HOŞ GELDİNİZ</h1>
+            <button class="git-buton" onclick="goToIlSecim()">Git</button>
+        </div>
+        <div class="ilce-listesi" id="ilSecimEkrani">
+            <label for="iller">Bir İl Seçin:</label>
+            <select id="iller">
+                <option value="" disabled selected>Seçiniz</option>
+            </select>
+            <div class="ilce-listesi">
+                <label for="ilceler">Bir İlçe Seçin:</label>
+                <select id="ilceler" onchange="ilceSecildi()">
+                    <option value="" disabled selected>Seçiniz</option>
+                </select>
+                <div class="eksik-alan" id="eksikAlanMesajiIlce"></div>
+                <div class="ilerle-buton">
+                    <button onclick="ilerle()">İlerle</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div id="settingsIcon">&#9776;</div>
+    <div id="settingsPanel">
+        <a href="#" onclick="goToHesapAyarları()">Hesap Ayarları</a>
+        <a href="#" onclick="logout()">Çıkış Yap</a>
+    </div>
+
+    <div class="soru-cevap-kutusu" id="soruEkrani">
+        <!-- Sorular ve cevaplar burada bulunuyor. -->
+        <div class="sorular">
+            <h2>Sorular</h2>
+            <p>Gittiğiniz ili ne derecede beğendiniz?</p>
+            <input type="radio" name="soru1" value="1">1
+            <input type="radio" name="soru1" value="2">2
+            <input type="radio" name="soru1" value="3">3
+            <input type="radio" name="soru1" value="4">4
+            <input type="radio" name="soru1" value="5">5
+
+            <p>Gittiğiniz ilçeyi ne derecede beğendiniz?</p>
+            <input type="radio" name="soru2" value="1">1
+            <input type="radio" name="soru2" value="2">2
+            <input type="radio" name="soru2" value="3">3
+            <input type="radio" name="soru2" value="4">4
+            <input type="radio" name="soru2" value="5">5
+        </div>
+    </div>
+
+    <div class="cevap-gonder">
+        <button onclick="cevaplariGonder()">Cevapları Gönder</button>
+    </div>
+
+    <div class="basari-mesaji" id="basariEkrani">
+        <p>Başarıyla cevaplarınız gönderildi. Teşekkür ederiz!</p>
+    </div>
+
+    <footer class="tum-haklar">
+        <p>© 2024 Türkiye Memnuniyet Anketi</p>
+    </footer>
+
+    <script>
+        $(document).ready(function () {
+            // İllerin bulunduğu JSON dosyasını yükle
+            $.getJSON("sehirler.json", function (data) {
+                // İllerin listesini al
+                var iller = Object.keys(data.iller);
+
+                // İllerin dropdown listesini doldur
+                for (var i = 0; i < iller.length; i++) {
+                    $("#iller").append("<option value='" + iller[i] + "'>" + iller[i] + "</option>");
+                }
+
+                // İl seçildiğinde
+                $("#iller").change(function () {
+                    // Seçilen ilin değerini al
+                    var secilenIl = $(this).val();
+
+                    // İlçe listesini güncelle
+                    updateIlceListesi(secilenIl, data);
+
+                    // İlçe listesini göster ve animasyonlu geçiş yap
+                    $(".ilce-listesi").slideDown("slow");
+                    $(".ilerle-buton").hide(); // İlerle butonunu gizle
+                });
+            });
+        });
+
+        function goToIlSecim() {
+            // Ekranın arka plan rengini değiştirerek sönükleşme efekti
+            $("body").animate({
+                opacity: 0
+            }, 500, function () {
+                // First Page'i gizle
+                $("#firstPage").hide();
+
+                // Il Seçim Ekranını göster ve animasyonlu geçiş yap
+                $("#ilSecimEkrani").slideDown("slow", function () {
+                    // Ekranın opaklığını geri getirerek efekti tamamla
+                    $("body").animate({
+                        opacity: 1
+                    }, 500);
+                });
+            });
+        }
+
+        // İlçe listesini güncelleyen fonksiyon
+        function updateIlceListesi(il, data) {
+            // İlçe listesini temizle
+            $("#ilceler").empty();
+
+            // Seçilen ile göre ilçeleri ekle
+            var ilceler = data.iller[il];
+
+            // İlçelerin boş olup olmadığını kontrol et
+            if (ilceler && ilceler.length > 0) {
+                for (var i = 0; i < ilceler.length; i++) {
+                    $("#ilceler").append("<option value='" + ilceler[i] + "'>" + ilceler[i] + "</option>");
+                }
+            } else {
+                // İlçe bulunamadıysa bir mesaj ekleyebilirsiniz
+                $("#ilceler").append("<option disabled selected>Seçiniz</option>");
+            }
+        }
+
+        // Dil değiştirme fonksiyonu
+        function changeLanguage() {
+            var selectedLanguage = $("#dilSecenekleri").val();
+            // Dil çevirisini yapmak için gerekli kodları ekleyebilirsiniz
+            // Burada sadece örnek bir alert mesajı gösteriyorum
+            alert("Dil değiştirildi: " + selectedLanguage);
+        }
+
+        // İlerle butonu fonksiyonu
+        function ilerle() {
+            var secilenIlce = $("#ilceler").val();
+            var eksikAlanMesajiIlce = $("#eksikAlanMesajiIlce");
+
+            if (!secilenIlce) {
+                eksikAlanMesajiIlce.text("Lütfen ilçe seçimi yapınız.");
+                $(".ilerle-buton button").css("background-color", "#c0392b"); // İlerle buton rengini kırmızı yap
+                $(".ilerle-buton").show(); // İlerle butonunu göster
+            } else {
+                eksikAlanMesajiIlce.text("");
+
+                // Diğer işlemleri burada gerçekleştirin
+                // Soruları göster animasyonlu bir şekilde
+                $(".soru-cevap-kutusu").slideDown("slow", function () {
+                    sorulariDoldur();
+
+                    // Cevapları Gönder butonunu göster
+                    $(".cevap-gonder").slideDown("slow", function () {
+                        // İlerle butonunu göster
+                        $(".ilerle-buton button").css("background-color", "#c0392b"); // İlerle buton rengini kırmızı yap
+                        $(".ilerle-buton").show();
+                    });
+                });
+            }
+        }
+
+        // Soruları dolduran fonksiyon
+        function sorulariDoldur() {
+            // Bu kısma soruları dolduracak kodları ekleyebilirsiniz.
+            // Örneğin:
+            $(".sorular").html(`
+                <h2>Sorular</h2>
+                <p>Gittiğiniz ili ne derecede beğendiniz?</p>
+                <input type="radio" name="soru1" value="1">1
+                <input type="radio" name="soru1" value="2">2
+                <input type="radio" name="soru1" value="3">3
+                <input type="radio" name="soru1" value="4">4
+                <input type="radio" name="soru1" value="5">5
+
+                <p>Gittiğiniz ilçeyi ne derecede beğendiniz?</p>
+                <input type="radio" name="soru2" value="1">1
+                <input type="radio" name="soru2" value="2">2
+                <input type="radio" name="soru2" value="3">3
+                <input type="radio" name="soru2" value="4">4
+                <input type="radio" name="soru2" value="5">5
+            `);
+        }
+
+        // Cevapları gönder butonu fonksiyonu
+        function cevaplariGonder() {
+            // Cevapları kontrol et
+            var sorular = $(".soru-cevap-kutusu input[type='radio']:checked");
+            if (sorular.length < 2) {
+                alert("Lütfen tüm soruları cevaplayınız.");
+                return;
+            }
+
+            // Başarı ve teşekkür mesajını göster
+            $(".basari-mesaji").slideDown("slow");
+            $(".cevap-gonder button").css("background-color", "#2ecc71"); // Cevapları Gönder buton rengini yeşil yap
+        }
+
+        // İlçe seçildiğinde tetiklenecek fonksiyon
+        function ilceSecildi() {
+            // İlçe seçildiğinde ilerle butonunu göster
+            $(".ilerle-buton").slideDown("slow");
+        }
+
+        // Ayarlar panelini aç/kapat
+        $("#settingsIcon").click(function () {
+            var panel = $("#settingsPanel");
+            if (panel.css("left") === "0px") {
+                panel.animate({
+                    left: -panel.width()
+                }, 500);
+            } else {
+                panel.animate({
+                    left: 0
+                }, 500);
+            }
+        });
+
+        // Çıkış yap
+        function logout() {
+            window.location.replace("index.html");
+        }
+
+        // Hesap ayarlarına git
+        function goToHesapAyarları() {
+            window.location.replace("hesap-ayarları.html");
+        }
+    </script>
+</body>
+
+</html>

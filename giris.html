@@ -1,0 +1,98 @@
+<!-- giris.html -->
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Giriş Yap</h2>
+        <form>
+            <label for="loginUsername">Kullanıcı Adı:</label>
+            <input type="text" id="loginUsername" name="loginUsername" required>
+
+            <label for="loginPassword">Şifre:</label>
+            <input type="password" id="loginPassword" name="loginPassword" required>
+
+            <button type="button" onclick="login()">Giriş Yap</button>
+        </form>
+
+        <p>Hesabınız yok mu? <a href="hesap_olustur.html">Hesap Oluşturun</a></p>
+
+        <!-- Yönetici Girişi -->
+        <p>Yönetici misiniz? <a href="yonetici.html">Yönetici Girişi</a></p>
+    </div>
+
+    <script>
+        function login() {
+            const enteredUsername = document.getElementById('loginUsername').value;
+            const enteredPassword = document.getElementById('loginPassword').value;
+
+            // Kaydedilmiş kullanıcı adı ve şifreyi localStorage'dan çek
+            const savedUserJSON = localStorage.getItem(enteredUsername);
+
+            if (savedUserJSON) {
+                const savedUser = JSON.parse(savedUserJSON);
+
+                // Kullanıcı adı ve şifre kontrolü
+                if (enteredUsername === savedUser.username && enteredPassword === savedUser.password) {
+                    // Başarılı giriş durumunda il_ilce_secim.html sayfasına yönlendir
+                    window.location.href = 'il-ilce-secim.html';
+                } else {
+                    console.error('Hatalı kullanıcı adı veya şifre. Lütfen tekrar deneyin.');
+                    alert('Hatalı kullanıcı adı veya şifre. Lütfen tekrar deneyin.');
+                }
+            } else {
+                console.error('Kullanıcı bulunamadı. Hesap oluşturun.');
+                alert('Kullanıcı bulunamadı. Hesap oluşturun.');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!-- hesap_olusturma.html -->
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesap Oluştur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #errorMessage {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="signupForm">
+        <h2>Hesap Oluştur</h2>
+        <label for="firstName">Adınız:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Soyadınız:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="username">Kullanıcı Adı:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Şifre:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="button" onclick="createAccount()">Hesap Oluştur</button>
+
+        <p id="successMessage" style="color: green; display: none;">Hesap başarıyla oluşturuldu!</p>
+        <p id="errorMessage"></p>
+
+        <p>Zaten bir hesabınız var mı? <a href="giris.html">Giriş Yap</a></p>
+    </form>
+
+    <script>
+        function createAccount() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Kullanıcı adı ve şifre kurallarını kontrol et
+            if (!validateUsername(username) || !validatePassword(password)) {
+                return;
+            }
+
+            // Kullanıcı adı kontrolü
+            if (localStorage.getItem(username)) {
+                showError("Bu kullanıcı adı zaten kullanılıyor. Lütfen başka bir kullanıcı adı seçin.");
+                return;
+            }
+
+            // Hesap oluşturma işlemleri burada yapılmalıdır.
+            // Bu örnek sadece temsilidir, gerçek uygulamada kullanıcı bilgilerini güvenli bir şekilde işlemeniz gerekmektedir.
+
+            // Hesap oluşturma başarılı
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+
+            // Kullanıcı bilgilerini localStorage'e sakla
+            const user = {
+                firstName: firstName,
+                lastName: lastName,
+                username: username,
+                password: password,
+            };
+            localStorage.setItem(username, JSON.stringify(user));
+
+            // Başarı mesajı gösterildikten sonra 2 saniye sonra giriş sayfasına yönlendirme
+            setTimeout(() => {
+                window.location.href = 'giris.html';
+            }, 2000);
+        }
+
+        function validateUsername(username) {
+            if (username.length < 3) {
+                showError("Kullanıcı adı en az 3 karakter olmalıdır.");
+                return false;
+            }
+
+            // Ek kullanıcı adı doğrulama kuralları ekleyebilirsiniz.
+
+            return true;
+        }
+
+        function validatePassword(password) {
+            if (password.length < 6) {
+                showError("Şifre en az 6 karakter olmalıdır.");
+                return false;
+            }
+
+            // Ek şifre doğrulama kuralları ekleyebilirsiniz.
+
+            return true;
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('errorMessage').innerText = message;
+        }
+    </script>
+</body>
+
+</html>

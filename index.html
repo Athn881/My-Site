@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Memnuniyet Anketi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .welcome-container {
+            text-align: center;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .welcome-container h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            text-align: center;
+            text-decoration: none;
+            background-color: #4caf50;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            margin-top: 20px;
+            color: #555;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script>
+        // Firebase konfigürasyonu
+        const firebaseConfig = {
+            apiKey: "AIzaSyDbiUlXbXyOBjVeB-Kk22u4LSDcqhpyh0M",
+            authDomain: "memnuniyet-anketi-c5482.firebaseapp.com",
+            databaseURL: "https://memnuniyet-anketi-c5482-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "memnuniyet-anketi-c5482",
+            storageBucket: "memnuniyet-anketi-c5482.appspot.com",
+            messagingSenderId: "857603186862",
+            appId: "1:857603186862:web:a2c65b1a0592f42e164d3f",
+            measurementId: "G-GSZTS3PENP"
+        };
+
+        // Firebase'i başlat
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = app.analytics();
+        const auth = app.auth();
+
+        $(document).ready(function () {
+            // İlerle butonuna tıklandığında
+            $("#ilerleButton").click(function () {
+                window.location.href = "giris.html";
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <div class="welcome-container">
+        <h1>Türkiye Memnuniyet Anketi</h1>
+        <div class="il">
+            <h1>HOŞ GELDİNİZ</h1>
+            <a href="giris.html" class="btn">İlerle</a>
+        </div>
+    </div>
+
+    <footer>&copy; 2024 Türkiye Memnuniyet Anketi</footer>
+
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+{
+    "iller": {
+      "Adana": ["Seyhan", "Yüreğir", "Karaisalı", "Ceyhan", "Aladağ"],
+      "Adıyaman": ["Merkez", "Besni", "Gölbaşı", "Kahta", "Sincik"],
+      "Afyonkarahisar": ["Merkez", "Başmakçı", "Bayat", "Bolvadin", "Çay"],
+      "Istanbul": ["Adalar", "Bağcılar", "Beşiktaş", "Beykoz", "Beylikdüzü"],
+      "Ankara": ["Akyurt", "Altındağ", "Ayaş", "Bala", "Beypazarı"],
+      "Izmir": ["Aliağa", "Bayındır", "Bayraklı", "Bergama", "Beydağ"]
+    }
+  }
+  

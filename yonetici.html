@@ -1,0 +1,88 @@
+<!-- yonetici.html -->
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Yönetici Paneli</h2>
+        <form>
+            <label for="adminUsername">Kullanıcı Adı:</label>
+            <input type="text" id="adminUsername" name="adminUsername" required>
+
+            <label for="adminPassword">Şifre:</label>
+            <input type="password" id="adminPassword" name="adminPassword" required>
+
+            <label for="securityCode">Güvenlik Kodu:</label>
+            <input type="password" id="securityCode" name="securityCode" required>
+
+            <button type="button" onclick="adminLogin()">Giriş Yap</button>
+        </form>
+
+        <p>Diğer sayfalara erişim için yönetici girişi yapın.</p>
+    </div>
+
+    <script>
+        function adminLogin() {
+            const adminUsername = document.getElementById('adminUsername').value;
+            const adminPassword = document.getElementById('adminPassword').value;
+            const securityCode = document.getElementById('securityCode').value;
+
+            // Yönetici bilgilerini kontrol et
+            if (adminUsername === "atahan.aydin" && adminPassword === "yeSPH987" && securityCode === "579413") {
+                alert('Yönetici girişi başarılı. Diğer sayfalara yönlendiriliyorsunuz.');
+                window.location.href = 'yonetici_sayfasi.html'; // Yönetici sayfasına yönlendir
+            } else {
+                alert('Yanlış yönetici bilgileri veya güvenlik kodu. Lütfen tekrar deneyin.');
+            }
+        }
+    </script>
+</body>
+
+</html>
